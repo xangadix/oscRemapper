@@ -1,8 +1,0 @@
-The code in oscjoy.cpp was written by Jeremy Friesner (jaf@lcsaudio.com).
-
-The code in the sdl_joystick folder was taken from the Simple DirectMedia
-Layer project source.  Thanks to the SDL team for making this code
-available!
-
-The OpenSoundControl protocol was designed by Matthew Wright and
-the Center for New Music and Audio Technologies in Berkely, CA.
