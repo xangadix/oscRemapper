@@ -1,4 +1,4 @@
-maABOUT
+ABOUT
 =====
 
 OscRemapper tries to elegantly use a joystick, or rather a gamepad, as an 
