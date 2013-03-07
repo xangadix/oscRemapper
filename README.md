@@ -4,7 +4,7 @@ ABOUT
 ResolumeJoy tries to elegantly use a joystick, or rather a gamepad, as an 
 interface device for Resolume VJ software.
 
-At the moment, the project consists in oscjoy1.10 and the oscReMapper.
+At the moment, the project consists in oscjoy1.10 and the oscRemapper.
 
 - oscJoy: https://public.msli.com/lcs/oscjoy/index.html
 - Resolume VJ Software: http://resolume.com/
@@ -50,8 +50,8 @@ ReMapper.
 If that didn't work, make sure you have the folllowing files available and 
 active on your computer.
 
-- oscReMapping.exe
-- oscReMapping_DEBUG.exe
+- oscRemapping.exe
+- oscRemapping_DEBUG.exe
 - oscjoy.exe
 
 open a command line ( run >> command ) and browse to the directory you have
@@ -65,7 +65,7 @@ when you press a button on your gamepad or move it around.
 
 If that went well, start up the remapper.
 
-bin\oscReceiveExample_DEBUG.exe
+bin\oscRemapper_DEBUG.exe
 
 Another box should open, and a blue screen; receiving and remapping the signals
 of oscJoy
@@ -73,10 +73,14 @@ of oscJoy
 Now finally start up resolume.
 
 In Resolume, check your OSC settings under preferences >> OSC
-Resolume should be listening to OSC on Port 6666.
+Resolume should be listening to OSC on Port 7000 (default)
 
 Note, the remapper can also pickup OSC signals sent by Resolume, if you have
 Resolume set to sent OSC on port 6667.
+
+tl;dr:
+oscjoy sends at port 6666 at which reMapper listens, it sends out osc to 
+resolume on the default port 7000
 
 
 Mac Users
@@ -135,13 +139,17 @@ I've put here, please make sure you have the correct files (ie. the ones in this
 readme file)
 http://www.openframeworks.cc/setup/codeblocks/
 
-IMPORTANT: As the oscReMapper was build upon the openFrameworks Project 
-'oscReceiveExample', the oscReMapper the project should be cloned in the same
+IMPORTANT: As the oscRemapper was build upon the openFrameworks Project 
+'oscReceiveExample', the oscRemapper the project should be cloned in the same
 folder in your openFrameworks dir. Most likely in: 
   
   openFrameworks/Examples/addon/ 
 
 If the workspace etc. resides in that directory, all linkage should work fine.
+
+tl;dr:
+Git clone into openFrameworks/Examples/addon/, a reMapper dir will be created
+and your the project will compile fine
 
 
 Mac Users
