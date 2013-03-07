@@ -1,4 +1,4 @@
-ABOUT
+maABOUT
 =====
 
 OscRemapper tries to elegantly use a joystick, or rather a gamepad, as an 
@@ -50,9 +50,21 @@ ReMapper.
 If that didn't work, make sure you have the folllowing files available and 
 active on your computer.
 
-- oscRemapping.exe
-- oscRemapping_DEBUG.exe
+- oscRemapper.exe
+- oscRemapper_DEBUG.exe
 - oscjoy.exe
+
+
+and the neccesary DLL files:
+
+- fmodex.dll
+- FreeImage.dll
+- glut.dll
+- libassimp.dll
+- qtmlClient.dll
+- zlib1.dll
+
+( should all be available in the /pack directory )
 
 open a command line ( run >> command ) and browse to the directory you have
 these files in. First start up osc joy
@@ -70,7 +82,7 @@ bin\oscRemapper_DEBUG.exe
 Another box should open, and a blue screen; receiving and remapping the signals
 of oscJoy
 
-Now finally start up resolume.
+Now finally start up Resolume.
 
 In Resolume, check your OSC settings under preferences >> OSC
 Resolume should be listening to OSC on Port 7000 (default)
