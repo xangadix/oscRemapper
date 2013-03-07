@@ -1,7 +1,7 @@
 ABOUT
 =====
 
-ResolumeJoy tries to elegantly use a joystick, or rather a gamepad, as an 
+ReMapper tries to elegantly use a joystick, or rather a gamepad, as an 
 interface device for Resolume VJ software.
 
 At the moment, the project consists in oscjoy1.10 and the oscRemapper.
