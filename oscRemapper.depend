@@ -1320,3 +1320,12 @@
 1362614283 source:d:\_work\open_framworks\examples\addons\_oscremapper2\src\testapp.cpp
 	"testApp.h"
 
+1362610515 source:d:\_work\open_framworks\examples\addons\oscremapper\src\main.cpp
+	"ofMain.h"
+	"testApp.h"
+	"ofAppGlutWindow.h"
+
+1362952569 d:\_work\open_framworks\examples\addons\oscremapper\src\testapp.h
+	"ofMain.h"
+	"ofxOsc.h"
+
