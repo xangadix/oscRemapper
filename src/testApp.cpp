@@ -287,6 +287,8 @@ void testApp::joystickRemap( float m, string a ) {
 
         // set mix mode
         // 2clips, 4clips, linkage
+        cout << "switch mode";
+
         if ( m == 1 ) {
             if (mix_mode == "2clips") {
                 mix_mode = "4clips";
