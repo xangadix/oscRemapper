@@ -68,19 +68,27 @@ void testApp::update(){
 	}
 }
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+
 void testApp::joystickRemap( float m, string a ) {
+
+    // #
+    // # NOTES #
+    // #
 
     // ## remapping goes here
     // ## example: /oscjoy.0.axis.0 (float)
     // ## /oscjoy.0.
-    // ## available
+
+    // ## available buttons:
 
     // axis.0 (float)
     // axis.1 (float)
     // axis.2 (float)
     // axis.3 (float)
-    // hat.0.y (float) .5
-    // hat.0.x (float) .5
+    // hat.0.y (float) as .5
+    // hat.0.x (float) as .5
     // button.0 (float) (1/0)
     // button.1 (float) (1/0)
     // button.2 (float) (1/0)
@@ -94,26 +102,31 @@ void testApp::joystickRemap( float m, string a ) {
     // button.10 (float) (1/0)
     // button.11 (float) (1/0)
 
-    // ## (some) resolume mappings and notes
+    // ## (some) resolume mappings and mre notes
     // set resolume to send signals to 6666 on your ip to view these
-    // /composition/video/cross/values
+    // receive on 7000 --> see main
+    // #define LISTEN_PORT 6666
+    // ##define SENDER_PORT 7000
+
+    // example addresses
+    // /composition/video/cross/values --> crossfade (not used)
     // /activelayer/video/position/values
     // /activeclip/video/position/values
 
     // composition/direction --> for whole comps
-    // no values :(
+    // no values, this needs to be switched :(
 
-    // /track/
-    // /track#/connect
-    // /layer1/autopilot [1,2,3]
+    // /track/ (not used)
+    // /track#/connect (not used)
+    // /layer1/autopilot [1,2,3] (not used)
     // /layer1/clip
-    // s.setAddress("/composition/video/scale/values");
-    // "/composition/link" + num + "/values"; -> rotary dashboard (1-6?)
+    // s.setAddress("/composition/video/scale/values"); (used through linkage)
+    // "/composition/link" + num + "/values"; -> rotary dashboard (1-6?) (used as linkage)
 
-    // /layer1/clip2
-    // /layer1/clip2/position/values
+    // /layer1/clip2 --> select layer 1 clip 2
+    // /layer1/clip2/position/values --> set layer 1, clip 2 playhead position (0-1)
 
-    // ### How to mix 4 clips insteat of 2
+    // ### How to mix 4 clips instead of 2 (description --> implementation in doFourClips )
     // left hat & axis; select and switch in pairs of 2 (4 clips)
     // right axis, set active clip for toggling
     // buttons, move track/connect, reset?
@@ -128,8 +141,10 @@ void testApp::joystickRemap( float m, string a ) {
 
 
     // ######################
-    // ### STICKS AND HAT ###
+    // ### STICKS and HAT ###
     // ######################
+
+    // #### HAT ####
 
     if ( a == "/oscjoy.0.hat.0.x") {
        // declare a signal
@@ -151,8 +166,10 @@ void testApp::joystickRemap( float m, string a ) {
         cout << "/layer2/video/opacity/values: " << ofToString(  abs( m - 1 ) ) << "\n";
     }
 
-    // #### end hat ####
+    // end hat ####
 
+
+    // #### LEFT STICK ####
 
     if ( a == "/oscjoy.0.axis.0") { // x, or sideways
 
@@ -169,7 +186,7 @@ void testApp::joystickRemap( float m, string a ) {
         }
 
         if ( mix_mode == "4clips") {
-            joy_axis_x = m;
+            joy_axis_x = m; // actually this should be all this function does
             doFourClips();
         }
 
@@ -197,7 +214,7 @@ void testApp::joystickRemap( float m, string a ) {
         }
 
         if ( mix_mode == "4clips") {
-            joy_axis_y = m;
+            joy_axis_y = m; // actually this should be all this function does
             doFourClips();
         }
 
@@ -210,7 +227,9 @@ void testApp::joystickRemap( float m, string a ) {
         }
     }
 
-    // #### end axis left ####
+    // end left stick ####
+
+    // #### RIGHT STICK ####
 
     if ( a == "/oscjoy.0.axis.2") {
         if ( m < 0.05 ) {
@@ -272,21 +291,20 @@ void testApp::joystickRemap( float m, string a ) {
         }
     }
 
-    // #### end axis right #####
+    // end right stick #####
 
+    // ###############
+    // ### BUTTONS ###
+    // ###############
 
+    // ### TOP 4 BUTTONS ###
 
     if ( a == "/oscjoy.0.button.0") {
-        // switch tracks --> TEST
-        // if ( m == 1 ) track_nr++;
-        //ofxOscMessage s;
-        //s.setAddress("/track" + ofToString(track_nr) + "/connect");
-        //s.addFloatArg(1);
-        //sender.sendMessage(s);
-        //cout << "/track" << ofToString(track_nr) << "/connect\n";
 
         // set mix mode
         // 2clips, 4clips, linkage
+        cout << "switch mode";
+
         if ( m == 1 ) {
             if (mix_mode == "2clips") {
                 mix_mode = "4clips";
@@ -301,6 +319,9 @@ void testApp::joystickRemap( float m, string a ) {
     }
 
     if ( a == "/oscjoy.0.button.1") {
+
+        cout << "switch target";
+
         if ( m == 1 ) {
             if ( button_target == "/activeclip/video/position/values" ) {
                 button_target = "/activelayer/video/position/values";
@@ -319,7 +340,7 @@ void testApp::joystickRemap( float m, string a ) {
     //if (ofIsStringInString(n, h))
 
     if ( a == "/oscjoy.0.button.2") {
-        // switch tracks --> TEST
+        // switch tracks --> not used
         //if ( m == 1 ) track_nr--;
         //if (track_nr < 1) track_nr = 1;
         //ofxOscMessage s;
@@ -327,29 +348,34 @@ void testApp::joystickRemap( float m, string a ) {
         //s.addFloatArg(1);
         //sender.sendMessage(s);
         //cout << "/track" << ofToString(track_nr) << "/connect\n";
+
         if ( m == 1 ) {
-            combosEnabled = "true";
+            combosEnabled = "true"; // rename to 'clipwalkerEnabed' (which is a combo)
         }else{
-            combosEnabled = "false";
+            combosEnabled = "false"; // rename to 'clipwalkerEnabed' (which is a combo)
         }
     }
 
     if ( a == "/oscjoy.0.button.3") {
-        // switch tracks --> TEST
-        //if ( m == 1 ) track_nr++;
-        //ofxOscMessage s;
-        //s.setAddress("/track" + ofToString(track_nr) + "/connect");
-        //s.addFloatArg(1);
-        //sender.sendMessage(s);
-        //cout << "/track" << ofToString(track_nr) << "/connect\n";
+
+        // only an idea
+        if ( m == 1 ) {
+            //deckswitchingEnabled = "true" // While press, allows for deck switching with left pad > up
+        }else{
+            //deckswitchingEnabled = "false" // While press, allows for deck switching with left pad < down
+        }
+
+        // also up and down could do stuff, maybe swtich blendmode on active layer ?
+        // or we could use it to walk tracks, although I don't see the point of that option :p
     }
+    // end top 4 buttons
 
 
     // #####################
     // ### FRONT BUTTONS ###
     // #####################
 
-    // front left top
+    // ## front left top
     if ( a == "/oscjoy.0.button.4") {
         // Random position
         ofxOscMessage s;
@@ -391,7 +417,7 @@ void testApp::joystickRemap( float m, string a ) {
         }
     }
 
-    // front left bottom
+    // ## front left bottom
     if ( a == "/oscjoy.0.button.5") {
 
         // Rewind
@@ -413,8 +439,9 @@ void testApp::joystickRemap( float m, string a ) {
         }
     }
 
-    // front right top
+    // ## front right top
     if ( a == "/oscjoy.0.button.6") {
+
         // Reverse while pressed
         string direction_target = button_target;
         if ( button_target == "/activeclip/video/position/values") direction_target = "/activeclip/video/position/direction";
@@ -436,7 +463,7 @@ void testApp::joystickRemap( float m, string a ) {
         }
     }
 
-    // front right bottom
+    // ### front right bottom
     if ( a == "/oscjoy.0.button.7") {
         // Pause while pressed
         // Reverse while pressed
@@ -459,8 +486,11 @@ void testApp::joystickRemap( float m, string a ) {
             cout << "send direction 2 " << pause_target << "\n";
         }
     }
+    // end buttons front ####
 
-    // under left
+    // ### under buttons ####
+
+    // ### under left
     if ( a == "/oscjoy.0.button.8") {
         // solo while pressed layer ( could also work with acive layer )
         ofxOscMessage s;
@@ -471,7 +501,7 @@ void testApp::joystickRemap( float m, string a ) {
     }
 
 
-    // under right
+    // ### under right
     if ( a == "/oscjoy.0.button.9") {
         // clear layer
         if (m == 1) {
@@ -482,13 +512,16 @@ void testApp::joystickRemap( float m, string a ) {
             cout << "/layer" << ofToString(layer_nr) << "/clear\n";
         }
     }
+    // end under buttons ####
 
-    // on stick, left
+    // ### on stick buttons ###
+
+    // ## on stick, left
     if ( a == "/oscjoy.0.button.10") {
         // nothing
     }
 
-    // on stick right
+    // ## on stick right
     if ( a == "/oscjoy.0.button.11") {
         // set previewed clip as active
         ofxOscMessage s;
@@ -499,10 +532,21 @@ void testApp::joystickRemap( float m, string a ) {
     }
 }
 
+// ### four clip mixer, fade and select automatically ###
 void testApp::doFourClips() {
-    /*
+
+    /* ### NOTES ###
+
+    // ## layer and clip positions
     l1 [l1c1][l1c2]
     l2 [l2c1][l2c2]
+
+    // ## positions
+    7   0   1
+      \ | /
+    6 -   - 2
+      / | \
+    5   4   3
 
     // ## switch pattern
     0   l1:.5, l2:.5 -- l1: c1, l2: c1 -- jx: 0.5,  jy: 0
@@ -513,12 +557,6 @@ void testApp::doFourClips() {
     5   11: 1, l2: 0 -- l1: c2, l2:    -- jx: 0,    jy: 1
     6   11:.5, l2:.5 -- l1: c2, l2: c1 -- jx: 0,    jy: 0.5
     7   l1: 0, l2: 1 -- l1:   , l2: c1 -- jx: 0,    jy: 0
-
-    7   0   1
-      \ | /
-    6 -   - 2
-      / | \
-    5   4   3
 
     // ## fade layers pattern
 
@@ -538,6 +576,8 @@ void testApp::doFourClips() {
 
     // select clip
     string hasSwitched = "false";
+
+    // allow for combos
     string combo22 = "";
     string combo12 = "";
     string combo21 = "";
@@ -617,6 +657,8 @@ void testApp::doFourClips() {
 
 
 //--------------------------------------------------------------
+
+// ### send feedback to the app ###
 void testApp::draw(){
 
 	string buf;
@@ -633,6 +675,7 @@ void testApp::draw(){
 	}
 }
 
+// ### more non used OF functions ###
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
 
